@@ -1,14 +1,18 @@
 import * as THREE from "three";
 import SceneInit from "./lib/SceneInit";
-import Rotation from "./lib/Rotation";
 import Planet from "./lib/Planets";
+import {planets, sun} from './lib/PlanetData'
+
+
+let multiplier = 1;
+
 
 let scene = new SceneInit();
 scene.initScene();
 scene.animate();
 
 const sunGeometry = new THREE.SphereGeometry(8);
-const sunTexture = new THREE.TextureLoader().load("public/2k_sun.jpg")
+const sunTexture = new THREE.TextureLoader().load("/2k_sun.jpg")
 const sunMaterial = new THREE.MeshBasicMaterial({
   map: sunTexture
 });
@@ -50,6 +54,14 @@ const saturnMesh = saturn.getMesh();
 let saturnSystem = new THREE.Group();
 saturnSystem.add(saturnMesh);
 
+// Saturn ring
+// const ringGeometry = new THREE.TorusGeometry(300, 100, 160, 100);
+// const ringMaterial = new THREE.MeshStandardMaterial({ color: 0xffff00, side: THREE.DoubleSide });
+// const rings = new THREE.Mesh(ringGeometry, ringMaterial);
+// rings.rotation.x = Math.PI / 2; // Rotate rings to be horizontal
+// saturnSystem.add(rings);
+
+
 const uranus = new Planet(5, 356, '/2k_uranus.jpg');
 const uranusMesh = uranus.getMesh();
 let uranusSystem = new THREE.Group();
@@ -62,6 +74,20 @@ neptuneSystem.add(neptuneMesh);
 
 solarSystem.add(mercurySystem, venusSystem, earthSystem, marsSystem, jupiterSystem, saturnSystem, uranusSystem, neptuneSystem);
 
-const mercuryRotation = new Rotation(mercuryMesh);
-const mercuryRotationMesh = mercuryRotation.getMesh;
-mercurySystem.add(mercuryRotationMesh);
+venusSystem.rotation.x = 0.5
+const earth_year = 2 * Math.PI * (1/60) * (1/60);
+const animate = () => {
+  sunMesh.rotation.y += 0.001;
+  mercurySystem.rotation.y += planets[0].rotationSpeed * multiplier;
+  venusSystem.rotation.y += planets[1].rotationSpeed * multiplier;
+  earthSystem.rotation.y += planets[2].rotationSpeed * multiplier;
+  marsSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  jupiterSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  saturnSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  uranusSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  neptuneSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+
+  requestAnimationFrame(animate);
+};
+
+animate();
