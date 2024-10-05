@@ -1,10 +1,10 @@
 import * as THREE from "three";
 import SceneInit from "./lib/SceneInit";
 import Planet from "./lib/Planets";
-import {planets, sun} from './lib/PlanetData'
+import {planets, sun} from './lib/PlanetData';
 
 
-let multiplier = 1;
+let multiplier = 100;
 
 
 let scene = new SceneInit();
@@ -82,10 +82,10 @@ const animate = () => {
   venusSystem.rotation.y += planets[1].rotationSpeed * multiplier;
   earthSystem.rotation.y += planets[2].rotationSpeed * multiplier;
   marsSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  jupiterSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  saturnSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  uranusSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  neptuneSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  jupiterSystem.rotation.y += planets[4].rotationSpeed * multiplier;
+  saturnSystem.rotation.y += planets[5].rotationSpeed * multiplier;
+  uranusSystem.rotation.y += planets[6].rotationSpeed * multiplier;
+  neptuneSystem.rotation.y += planets[7].rotationSpeed * multiplier;
 
   requestAnimationFrame(animate);
 };
