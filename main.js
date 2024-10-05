@@ -1,25 +1,44 @@
 import * as THREE from "three";
 import SceneInit from "./lib/SceneInit";
 import Planet from "./lib/Planets";
-import {planets, sun} from './lib/PlanetData';
+import { planets } from "./lib/PlanetData";
 
-
-let multiplier = 100;
-
+let multiplierSlider = document.getElementById('multiplierSlider')
+let multiplier = parseFloat(multiplierSlider.value);
+multiplierSlider.addEventListener('input', (event) => {
+  multiplier = parseFloat(event.target.value)
+})
 
 let scene = new SceneInit();
 scene.initScene();
 scene.animate();
 
+// Create the star field
+const starsGeometry = new THREE.BufferGeometry();
+const starsCount = 5000; // Number of stars
+const positions = new Float32Array(starsCount * 3); // x, y, z for each star
+
+for (let i = 0; i < starsCount; i++) {
+  positions[i * 3] = (Math.random() - 0.5) * 1000; // x position
+  positions[i * 3 + 1] = (Math.random() - 0.5) * 1000; // y position
+  positions[i * 3 + 2] = (Math.random() - 0.5) * 1000; // z position
+}
+
+starsGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+const starsMaterial = new THREE.PointsMaterial({ color: 0x888888, size: 0.5 });
+const stars = new THREE.Points(starsGeometry, starsMaterial);
+
 const sunGeometry = new THREE.SphereGeometry(8);
-const sunTexture = new THREE.TextureLoader().load("/2k_sun.jpg")
+const sunTexture = new THREE.TextureLoader().load("/2k_sun.jpg");
 const sunMaterial = new THREE.MeshBasicMaterial({
-  map: sunTexture
+  map: sunTexture,
 });
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
 
 const solarSystem = new THREE.Group();
 solarSystem.add(sunMesh);
+solarSystem.add(stars);
 
 solarSystem.add(sunMesh);
 scene.scene.add(solarSystem);
@@ -49,43 +68,59 @@ const jupiterMesh = jupiter.getMesh();
 let jupiterSystem = new THREE.Group();
 jupiterSystem.add(jupiterMesh);
 
-const saturn = new Planet(5, 256, '/2k_saturn.jpg');
+const saturn = new Planet(5, 256, "/2k_saturn.jpg");
 const saturnMesh = saturn.getMesh();
 let saturnSystem = new THREE.Group();
 saturnSystem.add(saturnMesh);
 
-// Saturn ring
-// const ringGeometry = new THREE.TorusGeometry(300, 100, 160, 100);
-// const ringMaterial = new THREE.MeshStandardMaterial({ color: 0xffff00, side: THREE.DoubleSide });
-// const rings = new THREE.Mesh(ringGeometry, ringMaterial);
-// rings.rotation.x = Math.PI / 2; // Rotate rings to be horizontal
-// saturnSystem.add(rings);
+const ringGeometry = new THREE.TorusGeometry(6, 0.2, 16, 100); // (radius, tube radius, radial segments, tubular segments)
+const ringMaterial = new THREE.MeshBasicMaterial({
+  color: 0xaaaaaa,
+  side: THREE.DoubleSide,
+}); // Gray color for rings
+const rings = new THREE.Mesh(ringGeometry, ringMaterial);
 
+// Position and rotate the rings
+rings.rotation.x = Math.PI / 2; // Rotate to lay flat
+saturnSystem.add(rings);
 
-const uranus = new Planet(5, 356, '/2k_uranus.jpg');
+const uranus = new Planet(5, 356, "/2k_uranus.jpg");
 const uranusMesh = uranus.getMesh();
 let uranusSystem = new THREE.Group();
 uranusSystem.add(uranusMesh);
 
-const neptune = new Planet(5, 456, '/2k_neptune');
+const neptune = new Planet(5, 456, "/2k_neptune");
 const neptuneMesh = neptune.getMesh();
 let neptuneSystem = new THREE.Group();
 neptuneSystem.add(neptuneMesh);
 
-solarSystem.add(mercurySystem, venusSystem, earthSystem, marsSystem, jupiterSystem, saturnSystem, uranusSystem, neptuneSystem);
+const trailPoints = [20];
+const trailMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
+const trailGeometry = new THREE.BufferGeometry().setFromPoints(trailPoints);
+const trailLine = new THREE.Line(trailGeometry, trailMaterial);
+earthSystem.add(trailLine);
 
-venusSystem.rotation.x = 0.5
-const earth_year = 2 * Math.PI * (1/60) * (1/60);
+solarSystem.add(
+  mercurySystem,
+  venusSystem,
+  earthSystem,
+  marsSystem,
+  jupiterSystem,
+  saturnSystem,
+  uranusSystem,
+  neptuneSystem
+);
+
 const animate = () => {
   sunMesh.rotation.y += 0.001;
-  mercurySystem.rotation.y += planets[0].rotationSpeed * multiplier;
-  venusSystem.rotation.y += planets[1].rotationSpeed * multiplier;
+  mercurySystem.rotation.y += planets[0].rotationSpeed * multiplier * 10;
+  venusSystem.rotation.y += planets[1].rotationSpeed * multiplier * 50;
   earthSystem.rotation.y += planets[2].rotationSpeed * multiplier;
   marsSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  jupiterSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  saturnSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  uranusSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  neptuneSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  jupiterSystem.rotation.y += planets[4].rotationSpeed * multiplier;
+  saturnSystem.rotation.y += planets[5].rotationSpeed * multiplier;
+  uranusSystem.rotation.y += planets[6].rotationSpeed * multiplier;
+  neptuneSystem.rotation.y += planets[7].rotationSpeed * multiplier;
 
   requestAnimationFrame(animate);
 };

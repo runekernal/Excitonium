@@ -6,9 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Excitonium</title>
     <style>
-      * {
+      body {
         margin: 0;
       }
+      canvas { display: block; }
+        .slider-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Georgia, 'Times New Roman', Times, serif ;
+        }
     </style>
   </head>
   <body>
@@ -16,6 +27,10 @@
     <script type="module" src="/main.js"></script>
     <div class="screen">
       <canvas id="myCanvas"></canvas>
+      <div class="slider-container">
+        <label for="orbitSlider">Speed Multiplier: </label>
+        <input type="range" id="multiplierSlider" min="1" max="50" step="1" value="1">
+    </div>
     </div>
   </body>
 </html>
