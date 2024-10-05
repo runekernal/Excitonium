@@ -82,10 +82,10 @@ const animate = () => {
   venusSystem.rotation.y += planets[1].rotationSpeed * multiplier;
   earthSystem.rotation.y += planets[2].rotationSpeed * multiplier;
   marsSystem.rotation.y += planets[3].rotationSpeed * multiplier;
-  jupiterSystem.rotation.y += planets[4].rotationSpeed * multiplier;
-  saturnSystem.rotation.y += planets[5].rotationSpeed * multiplier;
-  uranusSystem.rotation.y += planets[6].rotationSpeed * multiplier;
-  neptuneSystem.rotation.y += planets[7].rotationSpeed * multiplier;
+  jupiterSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  saturnSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  uranusSystem.rotation.y += planets[3].rotationSpeed * multiplier;
+  neptuneSystem.rotation.y += planets[3].rotationSpeed * multiplier;
 
   requestAnimationFrame(animate);
 };
