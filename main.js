@@ -94,11 +94,15 @@ const neptuneMesh = neptune.getMesh();
 let neptuneSystem = new THREE.Group();
 neptuneSystem.add(neptuneMesh);
 
-const trailPoints = [20];
-const trailMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
-const trailGeometry = new THREE.BufferGeometry().setFromPoints(trailPoints);
+const trailLength = 100; // Number of trail points
+const trailGeometry = new THREE.BufferGeometry();
+const trailPositions = new Float32Array(trailLength * 3); // x, y, z for each point
+
+// Create trail material
+const trailMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const trailLine = new THREE.Line(trailGeometry, trailMaterial);
 earthSystem.add(trailLine);
+
 
 solarSystem.add(
   mercurySystem,
