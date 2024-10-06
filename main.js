@@ -3,11 +3,11 @@ import SceneInit from "./lib/SceneInit";
 import Planet from "./lib/Planets";
 import { planets } from "./lib/PlanetData";
 
-let multiplierSlider = document.getElementById('multiplierSlider')
+let multiplierSlider = document.getElementById("multiplierSlider");
 let multiplier = parseFloat(multiplierSlider.value);
-multiplierSlider.addEventListener('input', (event) => {
-  multiplier = parseFloat(event.target.value)
-})
+multiplierSlider.addEventListener("input", (event) => {
+  multiplier = parseFloat(event.target.value);
+});
 
 let scene = new SceneInit();
 scene.initScene();
@@ -28,7 +28,7 @@ for (let i = 0; i < starsCount; i++) {
 }
 
 starsGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+starsGeometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
 const starsMaterial = new THREE.PointsMaterial({ color: 0x888888, size: 0.5 });
 const stars = new THREE.Points(starsGeometry, starsMaterial);
@@ -77,12 +77,9 @@ const saturnMesh = saturn.getMesh();
 let saturnSystem = new THREE.Group();
 saturnSystem.add(saturnMesh);
 
-const ringGeo = new THREE.RingGeometry(
-  12,
-  20
-);
+const ringGeo = new THREE.RingGeometry(12, 20);
 const ringMat = new THREE.MeshBasicMaterial({
-  map: new THREE.TextureLoader().load('/saturn_ring.png'),
+  map: new THREE.TextureLoader().load("/saturn_ring.png"),
   side: THREE.DoubleSide,
 });
 const ringMesh = new THREE.Mesh(ringGeo, ringMat);
@@ -106,7 +103,6 @@ const neptuneMesh = neptune.getMesh();
 let neptuneSystem = new THREE.Group();
 neptuneSystem.add(neptuneMesh);
 
-
 solarSystem.add(
   mercurySystem,
   venusSystem,
@@ -128,25 +124,25 @@ const animate = () => {
   saturnSystem.rotation.y += planets[5].rotationSpeed * multiplier;
   uranusSystem.rotation.y += planets[6].rotationSpeed * multiplier;
   neptuneSystem.rotation.y += planets[7].rotationSpeed * multiplier;
-  
-  // Orbital Tilt
-  mercurySystem.rotation.x = 0.000593
-  venusSystem.rotation.x = 3.094
-  earthSystem.rotation.x = 0.410
-  marsSystem.rotation.x = 0.440
-  jupiterSystem.rotation.x = 0.054
-  saturnSystem.rotation.x = 0.466
-  uranusSystem.rotation.x = 1.706
-  neptuneSystem.rotation.x = 0.494
 
-  stars.position.z += 0.01
-  stars.position.y += 0.01
-  stars.position.x += 0.01
+  // Orbital Tilt
+  mercurySystem.rotation.x = 0.000593;
+  venusSystem.rotation.x = 3.094;
+  earthSystem.rotation.x = 0.41;
+  marsSystem.rotation.x = 0.44;
+  jupiterSystem.rotation.x = 0.054;
+  saturnSystem.rotation.x = 0.466;
+  uranusSystem.rotation.x = 1.706;
+  neptuneSystem.rotation.x = 0.494;
+
+  stars.position.z += 0.01;
+  stars.position.y += 0.01;
+  stars.position.x += 0.01;
 
   if (stars.position.z > 100) {
     stars.position.z = 0;
   }
-  
+
   requestAnimationFrame(animate);
 };
 
