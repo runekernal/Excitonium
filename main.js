@@ -82,7 +82,7 @@ const ringGeo = new THREE.RingGeometry(
   20
 );
 const ringMat = new THREE.MeshBasicMaterial({
-  map: new THREE.TextureLoader().load('/saturn_ring.jpg'),
+  map: new THREE.TextureLoader().load('/saturn_ring.png'),
   side: THREE.DoubleSide,
 });
 const ringMesh = new THREE.Mesh(ringGeo, ringMat);
