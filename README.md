@@ -1,5 +1,5 @@
 <h1 align="center" id="title">Excitonium Web App</h1>
-![](https://github.com/runekernal/Excitonium/giphy.gif)
+![](https://github.com/runekernal/Excitonium/blob/main/giphy.gif)
 
 
 <p id="description">Excitonium is a simple interactive 3D web app of the solar system developed by Team Excitonium for the NASA Space Apps Challenge 2024. This project marks our first hackathon debut offering users an engaging and interactive experience to explore the solar system in real time. A key feature of the app is a speed slider that lets users adjust the speed of planetary orbits enhancing the exploration experience.</p>
