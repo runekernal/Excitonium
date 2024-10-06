@@ -138,6 +138,14 @@ const animate = () => {
   saturnSystem.rotation.x = 0.466
   uranusSystem.rotation.x = 1.706
   neptuneSystem.rotation.x = 0.494
+
+  stars.position.z += 0.01
+  stars.position.y += 0.01
+  stars.position.x += 0.01
+
+  if (stars.position.z > 100) {
+    stars.position.z = 0;
+  }
   
   requestAnimationFrame(animate);
 };
